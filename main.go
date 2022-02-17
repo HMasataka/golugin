@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"os"
 	"path/filepath"
 	"plugin"
 )
@@ -22,16 +23,24 @@ func main() {
 		panic(err)
 	}
 
-	f.(func(string))("Hello, World")
+	m := map[string]string{
+		"key": "value",
+	}
+	f.(func(map[string]string))(m)
 }
 
 func getPluginFile() (*plugin.Plugin, error) {
-	p, err := plugin.Open(pluginFileName)
+	pwd, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+
+	p, err := plugin.Open(filepath.Join(pwd, pluginFileName))
 	if err == nil {
 		return p, nil
 	}
 
-	p, err = plugin.Open(filepath.Join(pluginDirName, pluginFileName))
+	p, err = plugin.Open(filepath.Join(pwd, pluginDirName, pluginFileName))
 	if err == nil {
 		return p, nil
 	}

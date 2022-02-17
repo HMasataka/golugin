@@ -2,6 +2,6 @@ package main
 
 import "fmt"
 
-func Print(str string) {
-	fmt.Println(str)
+func Print(m map[string]string) {
+	fmt.Println(m)
 }
