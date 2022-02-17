@@ -2,8 +2,6 @@ package main
 
 import "plugin"
 
-type pluginFunc func(string)
-
 func main() {
 	p, err := plugin.Open("plugin.so")
 	if err != nil {
@@ -15,5 +13,5 @@ func main() {
 		panic(err)
 	}
 
-	f.(pluginFunc)("Hello, World")
+	f.(func(string))("Hello, World")
 }
