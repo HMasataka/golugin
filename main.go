@@ -26,7 +26,7 @@ func main() {
 	m := map[string]string{
 		"key": "value",
 	}
-	f.(func(map[string]string))(m)
+	f.(func(args ...interface{}))(m)
 }
 
 func getPluginFile() (*plugin.Plugin, error) {
